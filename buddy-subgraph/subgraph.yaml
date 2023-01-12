@@ -1,0 +1,82 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: BuddyOG
+    network: goerli
+    source:
+      address: "0xAF0D3617E3d59A59E5fceA1ebF75b61dFC9B5E2B"
+      abi: Buddy
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Buddy
+        - Diamond
+        - DiamondSlot
+      abis:
+        - name: Buddy
+          file: ./abis/Buddy.json
+      eventHandlers:
+        - event: DiamondInject(uint256,uint256,uint256)
+          handler: handleDiamondInject
+        - event: DiamondReject(uint256,uint256,uint256)
+          handler: handleDiamondReject
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+        - event: UpdatedAttribute(indexed uint256,uint8,uint256)
+          handler: handleUpdatedAttribute
+      file: ./src/buddy-og.ts
+
+  - kind: ethereum
+    name: BuddyYG
+    network: goerli
+    source:
+      address: "0x8f00A22573E2ec74D4A094236B57fcc232d6044a"
+      abi: Buddy
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Buddy
+        - Diamond
+        - DiamondSlot
+      abis:
+        - name: Buddy
+          file: ./abis/Buddy.json
+      eventHandlers:
+        - event: DiamondInject(uint256,uint256,uint256)
+          handler: handleDiamondInject
+        - event: DiamondReject(uint256,uint256,uint256)
+          handler: handleDiamondReject
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+        - event: UpdatedAttribute(indexed uint256,uint8,uint256)
+          handler: handleUpdatedAttribute
+      file: ./src/buddy-yg.ts
+      
+  # - kind: ethereum
+  #   name: Diamond
+  #   network: goerli
+  #   source:
+  #     address: "0xAAf967756CEffa565C4d539e0306b3a281710d5D"
+  #     abi: Diamond
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.7
+  #     language: wasm/assemblyscript
+  #     entities:
+  #       - Diamond
+  #       - DiamondSlot
+  #     abis:
+  #       - name: Diamond
+  #         file: ./abis/Diamond.json
+  #     eventHandlers:
+  #       - event: Transfer(indexed address,indexed address,indexed uint256)
+  #         handler: handleTransfer
+  #       - event: UpdatedAttribute(indexed uint256,uint8,uint256)
+  #         handler: handleUpdatedAttribute
+  #     file: ./src/diamond.ts

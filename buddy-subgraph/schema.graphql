@@ -1,0 +1,89 @@
+enum BuddyClass {
+  OGR # OG Rookie
+  OGA # OG Athlete
+  OGC # OG Champion
+  OGO # OG Olympian
+  YGR # YG Rookie
+  YGA # YG Athlete
+  YGC # YG Champion
+}
+
+enum SlotType {
+  BMDS # Beast Mode Diamond Slot
+  REDS # Rep Enhancer Diamond Slot
+  BDS # Booster Diamond Slot
+  BADS # Base Attribute Diamond Slot 
+  INVALID # Invalid type
+}
+
+enum DiamondType {
+  BUB # BM Upper Body
+  BC # BM Core
+  BLB # BM Lower Body
+  RUB # RE Upper Body
+  RC # RE Core
+  RLB # RE Lower Body
+  RC # Booster Cardio
+  BS # Booster Strength
+  XRCSG # XRCS gains
+  LUCK # Luck
+  RECOVERY # Recovery
+}
+
+type Buddy @entity {
+  id: ID!
+  
+  name: String!
+  type: BuddyClass!
+  level: BigInt!
+  skillScore: BigInt!
+  mints: BigInt
+  
+  baseXRCSGains: Int
+  baseLuck: Int
+  baseRecovery: Int
+  additionalXRCSGains: Int!
+  additionalLuck: Int!
+  additionalRecovery: Int!
+
+  upperStrength: BigInt!
+  lowerStrength: BigInt!
+  coreStrength: BigInt!
+
+  background: String
+  skin: String
+  hair: String
+  eyes: String
+  beard: String
+  shirt: String
+  pants: String
+  socks: String
+  shoes: String
+  imageUrl: String
+
+  slots: [DiamondSlot!]! @derivedFrom(field: "buddy")
+
+  owner: String!
+}
+
+type Diamond @entity {
+  id: ID!
+
+  name: String!
+  type: DiamondType
+  level: BigInt!
+  imageUrl: String
+
+  injectedSlot: DiamondSlot @derivedFrom(field: "diamond")
+
+  owner: String!
+}
+
+type DiamondSlot @entity {
+  id: ID!
+
+  type: SlotType!
+  buddy: Buddy!
+  slotId: Int!
+  diamond: Diamond
+}
